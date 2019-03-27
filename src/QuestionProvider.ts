@@ -23,17 +23,19 @@ const questions : Question[] = [{
   result: '16',
   reward: 10,
   penalty: -3
-}]
+}];
+
+const CHECK_LATENCY = 100;
+const DB_LATENCY = 100;
 
 const getRandomQuestion = (questions: Question[]) => {
   const index = Math.floor(questions.length * Math.random())
-  return {
+  return delayedResolve({
     Id: uuidv1(),
     ...questions[index],
-  }
+  }, DB_LATENCY);
 }
 
-const CHECK_LATENCY = 100;
 
 const checkQuestion = (question, answer) => delayedResolve(Math.random() < 0.5, CHECK_LATENCY);
 export default function QuestionProvider () {
